@@ -1,0 +1,89 @@
+year,scenario,MATH_raw,expected_entrants
+2024,baseline (x1),34.0,0.10200000000000001
+2024,baseline (x1),35.0,0.17500000000000002
+2024,baseline (x1),36.0,0.372
+2024,baseline (x1),37.0,0.418
+2024,baseline (x1),38.0,0.729
+2024,baseline (x1),39.0,1.296
+2024,baseline (x1),40.0,2.315
+2024,baseline (x1),41.0,2.952
+2024,baseline (x1),42.0,5.383
+2024,baseline (x1),43.0,6.983
+2024,baseline (x1),44.0,11.243
+2024,baseline (x1),45.0,11.402
+2024,baseline (x1),46.0,12.257
+2024,baseline (x1),47.0,8.065
+2024,baseline (x1),48.0,3.575
+2024,baseline (x1),50.0,0.08
+2024,realistic: new version + equating error,33.0,0.053
+2024,realistic: new version + equating error,34.0,0.123
+2024,realistic: new version + equating error,35.0,0.203
+2024,realistic: new version + equating error,36.0,0.397
+2024,realistic: new version + equating error,37.0,0.553
+2024,realistic: new version + equating error,38.0,0.9550000000000001
+2024,realistic: new version + equating error,39.0,1.463
+2024,realistic: new version + equating error,40.0,2.644
+2024,realistic: new version + equating error,41.0,3.257
+2024,realistic: new version + equating error,42.0,5.698
+2024,realistic: new version + equating error,43.0,7.16
+2024,realistic: new version + equating error,44.0,11.369
+2024,realistic: new version + equating error,45.0,11.769
+2024,realistic: new version + equating error,46.0,12.416
+2024,realistic: new version + equating error,47.0,8.055
+2024,realistic: new version + equating error,48.0,3.617
+2024,realistic: new version + equating error,50.0,0.1
+2025,baseline (x1),38.0,0.051000000000000004
+2025,baseline (x1),39.0,0.066
+2025,baseline (x1),40.0,0.157
+2025,baseline (x1),41.0,0.264
+2025,baseline (x1),42.0,0.487
+2025,baseline (x1),43.0,1.024
+2025,baseline (x1),44.0,1.806
+2025,baseline (x1),45.0,3.818
+2025,baseline (x1),46.0,6.167
+2025,baseline (x1),47.0,12.758000000000001
+2025,baseline (x1),48.0,16.487
+2025,baseline (x1),49.0,7.661
+2025,baseline (x1),50.0,0.231
+2025,realistic: new version + equating error,38.0,0.082
+2025,realistic: new version + equating error,39.0,0.155
+2025,realistic: new version + equating error,40.0,0.343
+2025,realistic: new version + equating error,41.0,0.46
+2025,realistic: new version + equating error,42.0,0.924
+2025,realistic: new version + equating error,43.0,1.402
+2025,realistic: new version + equating error,44.0,2.2
+2025,realistic: new version + equating error,45.0,4.195
+2025,realistic: new version + equating error,46.0,6.627
+2025,realistic: new version + equating error,47.0,13.176
+2025,realistic: new version + equating error,48.0,16.785
+2025,realistic: new version + equating error,49.0,7.718
+2025,realistic: new version + equating error,50.0,0.251
+2026,baseline (x1),39.0,0.124
+2026,baseline (x1),40.0,0.231
+2026,baseline (x1),41.0,0.6
+2026,baseline (x1),42.0,1.003
+2026,baseline (x1),43.0,1.817
+2026,baseline (x1),44.0,3.937
+2026,baseline (x1),45.0,5.127
+2026,baseline (x1),46.0,6.518
+2026,baseline (x1),47.0,9.94
+2026,baseline (x1),48.0,12.784
+2026,baseline (x1),49.0,13.302999999999999
+2026,baseline (x1),50.0,2.875
+2026,baseline (x1),51.0,0.13
+2026,realistic: new version + equating error,36.0,0.07100000000000001
+2026,realistic: new version + equating error,37.0,0.162
+2026,realistic: new version + equating error,38.0,0.226
+2026,realistic: new version + equating error,39.0,0.331
+2026,realistic: new version + equating error,40.0,0.501
+2026,realistic: new version + equating error,41.0,0.894
+2026,realistic: new version + equating error,42.0,1.182
+2026,realistic: new version + equating error,43.0,1.947
+2026,realistic: new version + equating error,44.0,3.93
+2026,realistic: new version + equating error,45.0,5.244
+2026,realistic: new version + equating error,46.0,6.628
+2026,realistic: new version + equating error,47.0,10.03
+2026,realistic: new version + equating error,48.0,12.862
+2026,realistic: new version + equating error,49.0,13.438
+2026,realistic: new version + equating error,50.0,2.787
+2026,realistic: new version + equating error,51.0,0.134

@@ -1,0 +1,234 @@
+program,year,scenario,band,n,mean_p_above_line
+Free Uni ECE,2024,baseline (x1),"[-12, -4)",804,0.02330721393034826
+Free Uni ECE,2024,baseline (x1),"[-4, -3)",77,0.1292987012987013
+Free Uni ECE,2024,baseline (x1),"[-3, -2)",92,0.18478260869565216
+Free Uni ECE,2024,baseline (x1),"[-2, -1)",56,0.2619642857142857
+Free Uni ECE,2024,baseline (x1),"[-1, 0)",66,0.36284848484848486
+Free Uni ECE,2024,baseline (x1),"[0, 1)",69,0.4768260869565218
+Free Uni ECE,2024,baseline (x1),"[1, 2)",65,0.6266615384615384
+Free Uni ECE,2024,baseline (x1),"[2, 3)",47,0.7132553191489361
+Free Uni ECE,2024,baseline (x1),"[3, 10)",114,0.9051666666666666
+Free Uni ECE,2024,realistic: new version + equating error,"[-12, -4)",804,0.024992537313432837
+Free Uni ECE,2024,realistic: new version + equating error,"[-4, -3)",77,0.13184415584415585
+Free Uni ECE,2024,realistic: new version + equating error,"[-3, -2)",92,0.1864782608695652
+Free Uni ECE,2024,realistic: new version + equating error,"[-2, -1)",56,0.2642142857142857
+Free Uni ECE,2024,realistic: new version + equating error,"[-1, 0)",66,0.3675909090909091
+Free Uni ECE,2024,realistic: new version + equating error,"[0, 1)",69,0.4752608695652174
+Free Uni ECE,2024,realistic: new version + equating error,"[1, 2)",65,0.6150769230769231
+Free Uni ECE,2024,realistic: new version + equating error,"[2, 3)",47,0.7086808510638298
+Free Uni ECE,2024,realistic: new version + equating error,"[3, 10)",114,0.8953508771929823
+Free Uni ECE,2025,baseline (x1),"[-12, -4)",629,0.016965023847376786
+Free Uni ECE,2025,baseline (x1),"[-4, -3)",42,0.09788095238095237
+Free Uni ECE,2025,baseline (x1),"[-3, -2)",63,0.15901587301587303
+Free Uni ECE,2025,baseline (x1),"[-2, -1)",58,0.2587931034482759
+Free Uni ECE,2025,baseline (x1),"[-1, 0)",44,0.3764090909090909
+Free Uni ECE,2025,baseline (x1),"[0, 1)",54,0.485925925925926
+Free Uni ECE,2025,baseline (x1),"[1, 2)",45,0.6343555555555556
+Free Uni ECE,2025,baseline (x1),"[2, 3)",41,0.7795121951219512
+Free Uni ECE,2025,baseline (x1),"[3, 10)",35,0.9078285714285714
+Free Uni ECE,2025,realistic: new version + equating error,"[-12, -4)",629,0.021292527821939588
+Free Uni ECE,2025,realistic: new version + equating error,"[-4, -3)",42,0.1108095238095238
+Free Uni ECE,2025,realistic: new version + equating error,"[-3, -2)",63,0.16225396825396823
+Free Uni ECE,2025,realistic: new version + equating error,"[-2, -1)",58,0.259948275862069
+Free Uni ECE,2025,realistic: new version + equating error,"[-1, 0)",44,0.37040909090909085
+Free Uni ECE,2025,realistic: new version + equating error,"[0, 1)",54,0.4799259259259259
+Free Uni ECE,2025,realistic: new version + equating error,"[1, 2)",45,0.6093111111111111
+Free Uni ECE,2025,realistic: new version + equating error,"[2, 3)",41,0.7516585365853659
+Free Uni ECE,2025,realistic: new version + equating error,"[3, 10)",35,0.8872571428571429
+Free Uni ECE,2026,baseline (x1),"[-12, -4)",865,0.011322543352601157
+Free Uni ECE,2026,baseline (x1),"[-4, -3)",85,0.07043529411764705
+Free Uni ECE,2026,baseline (x1),"[-3, -2)",92,0.11143478260869566
+Free Uni ECE,2026,baseline (x1),"[-2, -1)",86,0.18096511627906978
+Free Uni ECE,2026,baseline (x1),"[-1, 0)",83,0.2711566265060241
+Free Uni ECE,2026,baseline (x1),"[0, 1)",64,0.43590625
+Free Uni ECE,2026,baseline (x1),"[1, 2)",48,0.6176041666666666
+Free Uni ECE,2026,baseline (x1),"[2, 3)",35,0.7904
+Free Uni ECE,2026,baseline (x1),"[3, 10)",27,0.9123333333333333
+Free Uni ECE,2026,realistic: new version + equating error,"[-12, -4)",865,0.013698265895953757
+Free Uni ECE,2026,realistic: new version + equating error,"[-4, -3)",85,0.07355294117647058
+Free Uni ECE,2026,realistic: new version + equating error,"[-3, -2)",92,0.11504347826086957
+Free Uni ECE,2026,realistic: new version + equating error,"[-2, -1)",86,0.17927906976744187
+Free Uni ECE,2026,realistic: new version + equating error,"[-1, 0)",83,0.2648433734939759
+Free Uni ECE,2026,realistic: new version + equating error,"[0, 1)",64,0.42759375
+Free Uni ECE,2026,realistic: new version + equating error,"[1, 2)",48,0.6046458333333333
+Free Uni ECE,2026,realistic: new version + equating error,"[2, 3)",35,0.7730857142857143
+Free Uni ECE,2026,realistic: new version + equating error,"[3, 10)",27,0.9008518518518519
+ISET (TSU),2024,baseline (x1),"[-12, -4)",1275,0.05254274509803922
+ISET (TSU),2024,baseline (x1),"[-4, -3)",119,0.17221008403361343
+ISET (TSU),2024,baseline (x1),"[-3, -2)",95,0.22593684210526313
+ISET (TSU),2024,baseline (x1),"[-2, -1)",89,0.2853258426966292
+ISET (TSU),2024,baseline (x1),"[-1, 0)",90,0.37733333333333335
+ISET (TSU),2024,baseline (x1),"[0, 1)",101,0.45761386138613863
+ISET (TSU),2024,baseline (x1),"[1, 2)",93,0.5534516129032258
+ISET (TSU),2024,baseline (x1),"[2, 3)",76,0.6501052631578947
+ISET (TSU),2024,baseline (x1),"[3, 10)",466,0.8915987124463519
+ISET (TSU),2024,realistic: new version + equating error,"[-12, -4)",1275,0.05521803921568628
+ISET (TSU),2024,realistic: new version + equating error,"[-4, -3)",119,0.1755546218487395
+ISET (TSU),2024,realistic: new version + equating error,"[-3, -2)",95,0.22901052631578947
+ISET (TSU),2024,realistic: new version + equating error,"[-2, -1)",89,0.283123595505618
+ISET (TSU),2024,realistic: new version + equating error,"[-1, 0)",90,0.3756666666666667
+ISET (TSU),2024,realistic: new version + equating error,"[0, 1)",101,0.45349504950495045
+ISET (TSU),2024,realistic: new version + equating error,"[1, 2)",93,0.5438279569892474
+ISET (TSU),2024,realistic: new version + equating error,"[2, 3)",76,0.647671052631579
+ISET (TSU),2024,realistic: new version + equating error,"[3, 10)",466,0.8862167381974249
+ISET (TSU),2025,baseline (x1),"[-12, -4)",1045,0.04989473684210526
+ISET (TSU),2025,baseline (x1),"[-4, -3)",122,0.1899672131147541
+ISET (TSU),2025,baseline (x1),"[-3, -2)",113,0.2552566371681416
+ISET (TSU),2025,baseline (x1),"[-2, -1)",75,0.31650666666666666
+ISET (TSU),2025,baseline (x1),"[-1, 0)",93,0.4003118279569892
+ISET (TSU),2025,baseline (x1),"[0, 1)",94,0.4877340425531915
+ISET (TSU),2025,baseline (x1),"[1, 2)",86,0.5785116279069767
+ISET (TSU),2025,baseline (x1),"[2, 3)",78,0.6667051282051282
+ISET (TSU),2025,baseline (x1),"[3, 10)",481,0.8836133056133055
+ISET (TSU),2025,realistic: new version + equating error,"[-12, -4)",1045,0.05135215311004784
+ISET (TSU),2025,realistic: new version + equating error,"[-4, -3)",122,0.19154918032786886
+ISET (TSU),2025,realistic: new version + equating error,"[-3, -2)",113,0.2519734513274336
+ISET (TSU),2025,realistic: new version + equating error,"[-2, -1)",75,0.3161333333333333
+ISET (TSU),2025,realistic: new version + equating error,"[-1, 0)",93,0.4024516129032258
+ISET (TSU),2025,realistic: new version + equating error,"[0, 1)",94,0.4842021276595745
+ISET (TSU),2025,realistic: new version + equating error,"[1, 2)",86,0.5772093023255814
+ISET (TSU),2025,realistic: new version + equating error,"[2, 3)",78,0.664974358974359
+ISET (TSU),2025,realistic: new version + equating error,"[3, 10)",481,0.8813638253638253
+ISET (TSU),2026,baseline (x1),"[-12, -4)",845,0.024196449704142014
+ISET (TSU),2026,baseline (x1),"[-4, -3)",127,0.11437795275590551
+ISET (TSU),2026,baseline (x1),"[-3, -2)",94,0.1755
+ISET (TSU),2026,baseline (x1),"[-2, -1)",102,0.25966666666666666
+ISET (TSU),2026,baseline (x1),"[-1, 0)",95,0.3471368421052632
+ISET (TSU),2026,baseline (x1),"[0, 1)",77,0.4575454545454546
+ISET (TSU),2026,baseline (x1),"[1, 2)",95,0.6015263157894737
+ISET (TSU),2026,baseline (x1),"[2, 3)",78,0.7390641025641026
+ISET (TSU),2026,baseline (x1),"[3, 10)",137,0.9172116788321169
+ISET (TSU),2026,realistic: new version + equating error,"[-12, -4)",845,0.030566863905325446
+ISET (TSU),2026,realistic: new version + equating error,"[-4, -3)",127,0.12338582677165354
+ISET (TSU),2026,realistic: new version + equating error,"[-3, -2)",94,0.18268085106382978
+ISET (TSU),2026,realistic: new version + equating error,"[-2, -1)",102,0.25801960784313727
+ISET (TSU),2026,realistic: new version + equating error,"[-1, 0)",95,0.34622105263157893
+ISET (TSU),2026,realistic: new version + equating error,"[0, 1)",77,0.44315584415584414
+ISET (TSU),2026,realistic: new version + equating error,"[1, 2)",95,0.5761684210526317
+ISET (TSU),2026,realistic: new version + equating error,"[2, 3)",78,0.7148333333333333
+ISET (TSU),2026,realistic: new version + equating error,"[3, 10)",137,0.9039416058394161
+MACS,2024,baseline (x1),"[-12, -4)",783,0.014329501915708812
+MACS,2024,baseline (x1),"[-4, -3)",83,0.08703614457831325
+MACS,2024,baseline (x1),"[-3, -2)",63,0.146031746031746
+MACS,2024,baseline (x1),"[-2, -1)",74,0.24025675675675676
+MACS,2024,baseline (x1),"[-1, 0)",62,0.35332258064516125
+MACS,2024,baseline (x1),"[0, 1)",62,0.46299999999999997
+MACS,2024,baseline (x1),"[1, 2)",51,0.5913921568627452
+MACS,2024,baseline (x1),"[2, 3)",40,0.753525
+MACS,2024,baseline (x1),"[3, 10)",43,0.920093023255814
+MACS,2024,half error (x0.5),"[-12, -4)",783,0.007833971902937421
+MACS,2024,half error (x0.5),"[-4, -3)",83,0.06850602409638554
+MACS,2024,half error (x0.5),"[-3, -2)",63,0.12587301587301586
+MACS,2024,half error (x0.5),"[-2, -1)",74,0.2330810810810811
+MACS,2024,half error (x0.5),"[-1, 0)",62,0.36748387096774193
+MACS,2024,half error (x0.5),"[0, 1)",62,0.49788709677419357
+MACS,2024,half error (x0.5),"[1, 2)",51,0.6432549019607843
+MACS,2024,half error (x0.5),"[2, 3)",40,0.8022500000000001
+MACS,2024,half error (x0.5),"[3, 10)",43,0.9403720930232559
+MACS,2024,more error (x1.7),"[-12, -4)",783,0.024008939974457216
+MACS,2024,more error (x1.7),"[-4, -3)",83,0.10612048192771084
+MACS,2024,more error (x1.7),"[-3, -2)",63,0.16196825396825398
+MACS,2024,more error (x1.7),"[-2, -1)",74,0.23904054054054055
+MACS,2024,more error (x1.7),"[-1, 0)",62,0.32893548387096777
+MACS,2024,more error (x1.7),"[0, 1)",62,0.4223387096774193
+MACS,2024,more error (x1.7),"[1, 2)",51,0.5344901960784314
+MACS,2024,more error (x1.7),"[2, 3)",40,0.696875
+MACS,2024,more error (x1.7),"[3, 10)",43,0.8898837209302326
+MACS,2024,quarter error (x0.25),"[-12, -4)",783,0.00451213282247765
+MACS,2024,quarter error (x0.25),"[-4, -3)",83,0.05650602409638553
+MACS,2024,quarter error (x0.25),"[-3, -2)",63,0.11061904761904763
+MACS,2024,quarter error (x0.25),"[-2, -1)",74,0.22364864864864867
+MACS,2024,quarter error (x0.25),"[-1, 0)",62,0.37737096774193546
+MACS,2024,quarter error (x0.25),"[0, 1)",62,0.5139193548387097
+MACS,2024,quarter error (x0.25),"[1, 2)",51,0.6790588235294117
+MACS,2024,quarter error (x0.25),"[2, 3)",40,0.829175
+MACS,2024,quarter error (x0.25),"[3, 10)",43,0.9580232558139535
+MACS,2024,realistic: new version + equating error,"[-12, -4)",783,0.01579821200510856
+MACS,2024,realistic: new version + equating error,"[-4, -3)",83,0.09240963855421687
+MACS,2024,realistic: new version + equating error,"[-3, -2)",63,0.15031746031746032
+MACS,2024,realistic: new version + equating error,"[-2, -1)",74,0.24510810810810812
+MACS,2024,realistic: new version + equating error,"[-1, 0)",62,0.35664516129032253
+MACS,2024,realistic: new version + equating error,"[0, 1)",62,0.4606290322580645
+MACS,2024,realistic: new version + equating error,"[1, 2)",51,0.5821764705882353
+MACS,2024,realistic: new version + equating error,"[2, 3)",40,0.735825
+MACS,2024,realistic: new version + equating error,"[3, 10)",43,0.8934186046511629
+MACS,2025,baseline (x1),"[-12, -4)",650,0.007636923076923078
+MACS,2025,baseline (x1),"[-4, -3)",63,0.07814285714285714
+MACS,2025,baseline (x1),"[-3, -2)",62,0.14159677419354838
+MACS,2025,baseline (x1),"[-2, -1)",74,0.21606756756756756
+MACS,2025,baseline (x1),"[-1, 0)",50,0.3267
+MACS,2025,baseline (x1),"[0, 1)",67,0.4710597014925373
+MACS,2025,baseline (x1),"[1, 2)",41,0.6988780487804878
+MACS,2025,baseline (x1),"[2, 3)",21,0.8458095238095238
+MACS,2025,half error (x0.5),"[-12, -4)",650,0.00456
+MACS,2025,half error (x0.5),"[-4, -3)",63,0.059349206349206346
+MACS,2025,half error (x0.5),"[-3, -2)",62,0.12040322580645162
+MACS,2025,half error (x0.5),"[-2, -1)",74,0.19902702702702701
+MACS,2025,half error (x0.5),"[-1, 0)",50,0.33704
+MACS,2025,half error (x0.5),"[0, 1)",67,0.508731343283582
+MACS,2025,half error (x0.5),"[1, 2)",41,0.7444390243902439
+MACS,2025,half error (x0.5),"[2, 3)",21,0.8875714285714286
+MACS,2025,more error (x1.7),"[-12, -4)",650,0.01398
+MACS,2025,more error (x1.7),"[-4, -3)",63,0.09323809523809523
+MACS,2025,more error (x1.7),"[-3, -2)",62,0.15017741935483872
+MACS,2025,more error (x1.7),"[-2, -1)",74,0.21879729729729727
+MACS,2025,more error (x1.7),"[-1, 0)",50,0.31364000000000003
+MACS,2025,more error (x1.7),"[0, 1)",67,0.43343283582089553
+MACS,2025,more error (x1.7),"[1, 2)",41,0.6497073170731708
+MACS,2025,more error (x1.7),"[2, 3)",21,0.8078095238095238
+MACS,2025,quarter error (x0.25),"[-12, -4)",650,0.00274
+MACS,2025,quarter error (x0.25),"[-4, -3)",63,0.04815873015873016
+MACS,2025,quarter error (x0.25),"[-3, -2)",62,0.10303225806451613
+MACS,2025,quarter error (x0.25),"[-2, -1)",74,0.19013513513513514
+MACS,2025,quarter error (x0.25),"[-1, 0)",50,0.34398
+MACS,2025,quarter error (x0.25),"[0, 1)",67,0.5302686567164179
+MACS,2025,quarter error (x0.25),"[1, 2)",41,0.7787560975609755
+MACS,2025,quarter error (x0.25),"[2, 3)",21,0.9081428571428573
+MACS,2025,realistic: new version + equating error,"[-12, -4)",650,0.01052923076923077
+MACS,2025,realistic: new version + equating error,"[-4, -3)",63,0.08603174603174603
+MACS,2025,realistic: new version + equating error,"[-3, -2)",62,0.15198387096774194
+MACS,2025,realistic: new version + equating error,"[-2, -1)",74,0.2235810810810811
+MACS,2025,realistic: new version + equating error,"[-1, 0)",50,0.32189999999999996
+MACS,2025,realistic: new version + equating error,"[0, 1)",67,0.4540746268656716
+MACS,2025,realistic: new version + equating error,"[1, 2)",41,0.6624634146341464
+MACS,2025,realistic: new version + equating error,"[2, 3)",21,0.8107619047619048
+MACS,2026,baseline (x1),"[-12, -4)",970,0.006893814432989691
+MACS,2026,baseline (x1),"[-4, -3)",119,0.044445378151260505
+MACS,2026,baseline (x1),"[-3, -2)",115,0.07310434782608696
+MACS,2026,baseline (x1),"[-2, -1)",88,0.12994318181818182
+MACS,2026,baseline (x1),"[-1, 0)",93,0.2865161290322581
+MACS,2026,baseline (x1),"[0, 1)",93,0.5711720430107526
+MACS,2026,baseline (x1),"[1, 2)",74,0.7712027027027027
+MACS,2026,baseline (x1),"[2, 3)",13,0.8717692307692307
+MACS,2026,half error (x0.5),"[-12, -4)",970,0.002694845360824742
+MACS,2026,half error (x0.5),"[-4, -3)",119,0.02252941176470588
+MACS,2026,half error (x0.5),"[-3, -2)",115,0.04480869565217391
+MACS,2026,half error (x0.5),"[-2, -1)",88,0.10726136363636364
+MACS,2026,half error (x0.5),"[-1, 0)",93,0.29243010752688176
+MACS,2026,half error (x0.5),"[0, 1)",93,0.6262365591397849
+MACS,2026,half error (x0.5),"[1, 2)",74,0.8470540540540541
+MACS,2026,half error (x0.5),"[2, 3)",13,0.9226923076923078
+MACS,2026,more error (x1.7),"[-12, -4)",970,0.012578350515463918
+MACS,2026,more error (x1.7),"[-4, -3)",119,0.0662436974789916
+MACS,2026,more error (x1.7),"[-3, -2)",115,0.09959130434782608
+MACS,2026,more error (x1.7),"[-2, -1)",88,0.15707954545454547
+MACS,2026,more error (x1.7),"[-1, 0)",93,0.2874838709677419
+MACS,2026,more error (x1.7),"[0, 1)",93,0.5090752688172043
+MACS,2026,more error (x1.7),"[1, 2)",74,0.6818243243243243
+MACS,2026,more error (x1.7),"[2, 3)",13,0.7610769230769231
+MACS,2026,quarter error (x0.25),"[-12, -4)",970,0.0007247422680412371
+MACS,2026,quarter error (x0.25),"[-4, -3)",119,0.01011764705882353
+MACS,2026,quarter error (x0.25),"[-3, -2)",115,0.026982608695652173
+MACS,2026,quarter error (x0.25),"[-2, -1)",88,0.09163636363636364
+MACS,2026,quarter error (x0.25),"[-1, 0)",93,0.29812903225806453
+MACS,2026,quarter error (x0.25),"[0, 1)",93,0.6622473118279569
+MACS,2026,quarter error (x0.25),"[1, 2)",74,0.8823513513513513
+MACS,2026,quarter error (x0.25),"[2, 3)",13,0.9474615384615385
+MACS,2026,realistic: new version + equating error,"[-12, -4)",970,0.008655670103092785
+MACS,2026,realistic: new version + equating error,"[-4, -3)",119,0.04663025210084034
+MACS,2026,realistic: new version + equating error,"[-3, -2)",115,0.07420869565217392
+MACS,2026,realistic: new version + equating error,"[-2, -1)",88,0.13020454545454546
+MACS,2026,realistic: new version + equating error,"[-1, 0)",93,0.28440860215053765
+MACS,2026,realistic: new version + equating error,"[0, 1)",93,0.5605591397849462
+MACS,2026,realistic: new version + equating error,"[1, 2)",74,0.7591891891891892
+MACS,2026,realistic: new version + equating error,"[2, 3)",13,0.8636923076923076

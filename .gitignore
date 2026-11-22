@@ -1,0 +1,11 @@
+﻿.venv/
+__pycache__/
+.ipynb_checkpoints/
+data/raw/*
+!data/raw/sources.csv
+data/processed/
+outputs/checks/
+outputs/pdf_txt/
+outputs/findings.md
+paper/
+AGENTS.md
