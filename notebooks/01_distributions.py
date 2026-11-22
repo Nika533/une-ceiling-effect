@@ -1,4 +1,4 @@
-﻿# %% [markdown]
+# %% [markdown]
 # # 01 - Score distributions and ceiling indicators (2020-2026)
 #
 # Source: NAEC equating tables (`Stats_YYYY.xlsx`): number of test-takers at each raw score,
@@ -78,7 +78,7 @@ ys.round(2)
 # %%
 m = eq[eq.subject == "MATH"].groupby(["year", "raw"]).n.sum().reset_index()
 m["share"] = 100 * m.n / m.groupby("year").n.transform("sum")
-fig, ax = plt.subplots(figsize=(7.5, 4.2))
+fig, ax = plt.subplots(figsize=(6.5, 3.3))
 colors = {2020: "black", 2021: "#6baed6", 2022: "#2171b5",
           2023: "#fdae6b", 2024: "#fd8d3c", 2025: "#e6550d", 2026: "#a63603"}
 labels = {2020: "2020 (max 59)", 2021: "2021 (old format)", 2022: "2022 (old format)",
@@ -93,31 +93,33 @@ ax.yaxis.set_major_locator(mticker.FixedLocator([0.1, 0.2, 0.5, 1, 2]))
 ax.yaxis.set_minor_locator(mticker.NullLocator())
 ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f"{v:g}%"))
 ax.set_ylim(0.08, 3)
-ax.text(51.3, 1.6, "max = 51\n(2021-2026)", color="dimgray", fontsize=8)
+ax.text(51.3, 1.6, "max = 51\n(2021-2026)", color="dimgray", fontsize=9.5)
 ax.set_xlabel("Raw score (mathematics)")
 ax.set_ylabel("Share of test-takers at each score (log scale)")
 ax.set_title("Mathematics: upper tail of the raw-score distribution")
-ax.legend(ncol=2, fontsize=7.5, frameon=False, loc="lower left")
+ax.legend(ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(0.45, -0.16))
 savefig(fig, "fig01_math_upper_tail")
 
 # %% [markdown]
 # ## Figure 2 - Ceiling indicators by subject and year
 
 # %%
-fig, axes = plt.subplots(1, 3, figsize=(12, 3.6))
+fig, axes = plt.subplots(1, 3, figsize=(8.4, 2.5))
 colors = {"MATH": "tab:red", "ENG": "tab:blue", "GEO": "tab:green", "HIST": "tab:orange"}
 for s, c in colors.items():
     d = ys[ys.subject == s]
     for ax, col in zip(axes, ["pct_top3", "pts_top1pct", "tail_flatness"]):
         ax.plot(d.year, d[col], marker="o", color=c, label=SUBJ_NAME[s])
-axes[0].set_title("% of test-takers in the top 3 points")
-axes[1].set_title("Score points occupied by the top 1%")
-axes[2].set_title("Tail flatness near the maximum")
+axes[0].set_title("% of test-takers in\nthe top 3 points")
+axes[1].set_title("Score points occupied\nby the top 1%")
+axes[2].set_title("Tail flatness\nnear the maximum")
 axes[2].axhline(1, color="grey", lw=0.8, ls=":")
 for ax in axes:
     ax.set_xlabel("Year")
-axes[0].legend(fontsize=8, frameon=False)
-fig.tight_layout()
+handles, labels_ = axes[0].get_legend_handles_labels()
+fig.legend(handles, labels_, loc="lower center", ncol=4,
+           framealpha=0.85, edgecolor="none")
+fig.tight_layout(rect=[0, 0.11, 1, 1])
 savefig(fig, "fig02_ceiling_indicators")
 
 # %% [markdown]

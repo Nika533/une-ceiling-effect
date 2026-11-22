@@ -120,24 +120,24 @@ top
 # ## Figure 3 - Measurement error vs. the score gaps that decide admission
 
 # %%
-fig, axes = plt.subplots(1, 2, figsize=(11, 3.8))
+fig, axes = plt.subplots(1, 2, figsize=(8.4, 2.9))
 ax = axes[0]
 ax.fill_between(sem.true_raw, sem.sem_lower, sem.sem_upper_2026fmt, alpha=0.3, color="tab:red",
                 label="SEM range, 2023-26 format")
 ax.plot(sem.true_raw, sem.sem_lower, color="tab:red")
 ax.plot(sem.true_raw, sem.sem_upper_2026fmt, color="tab:red", ls="--")
 ax.axhline(1, color="grey", ls=":", lw=1)
-ax.text(40.2, 1.03, "1 raw point", fontsize=8, color="grey")
+ax.text(40.2, 1.15, "1 raw point", fontsize=9.5, color="grey")
 ax.set_xlabel("True raw score (mathematics, max 51)")
 ax.set_ylabel("Standard error (raw points)")
-ax.set_title("Conditional measurement error near the top")
-ax.legend(fontsize=8, frameon=False)
+ax.set_title("Conditional measurement error\nnear the top")
+ax.legend(framealpha=0.85, edgecolor="none")
 ax = axes[1]
 ax.errorbar(eqse.raw_v2, eqse.boot_mean - eqse.raw_v2, yerr=[eqse.boot_mean - eqse.ci95_lo, eqse.ci95_hi - eqse.boot_mean],
             fmt="o", ms=3, color="tab:purple", capsize=2)
 ax.axhline(0, color="grey", lw=0.8)
 ax.set_xlabel("Raw score on version II (2026)")
 ax.set_ylabel("Equated score minus raw score")
-ax.set_title("Version adjustment at the top, with 95% bootstrap CI")
+ax.set_title("Version adjustment at the top,\nwith 95% bootstrap CI")
 fig.tight_layout()
 savefig(fig, "fig03_measurement_error")

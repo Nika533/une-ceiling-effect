@@ -143,6 +143,24 @@ MACS,2024,quarter error (x0.25),"[0, 1)",62,0.5139193548387097
 MACS,2024,quarter error (x0.25),"[1, 2)",51,0.6790588235294117
 MACS,2024,quarter error (x0.25),"[2, 3)",40,0.829175
 MACS,2024,quarter error (x0.25),"[3, 10)",43,0.9580232558139535
+MACS,2024,"realistic, alternative math tail: less error at the top","[-12, -4)",783,0.013136653895274585
+MACS,2024,"realistic, alternative math tail: less error at the top","[-4, -3)",83,0.07824096385542169
+MACS,2024,"realistic, alternative math tail: less error at the top","[-3, -2)",63,0.13398412698412698
+MACS,2024,"realistic, alternative math tail: less error at the top","[-2, -1)",74,0.2504864864864865
+MACS,2024,"realistic, alternative math tail: less error at the top","[-1, 0)",62,0.37551612903225806
+MACS,2024,"realistic, alternative math tail: less error at the top","[0, 1)",62,0.4878709677419355
+MACS,2024,"realistic, alternative math tail: less error at the top","[1, 2)",51,0.6041568627450981
+MACS,2024,"realistic, alternative math tail: less error at the top","[2, 3)",40,0.73765
+MACS,2024,"realistic, alternative math tail: less error at the top","[3, 10)",43,0.8900465116279069
+MACS,2024,"realistic, alternative math tail: more error at the top","[-12, -4)",783,0.025352490421455938
+MACS,2024,"realistic, alternative math tail: more error at the top","[-4, -3)",83,0.1249277108433735
+MACS,2024,"realistic, alternative math tail: more error at the top","[-3, -2)",63,0.18255555555555555
+MACS,2024,"realistic, alternative math tail: more error at the top","[-2, -1)",74,0.2407162162162162
+MACS,2024,"realistic, alternative math tail: more error at the top","[-1, 0)",62,0.3275322580645161
+MACS,2024,"realistic, alternative math tail: more error at the top","[0, 1)",62,0.39688709677419354
+MACS,2024,"realistic, alternative math tail: more error at the top","[1, 2)",51,0.5140392156862745
+MACS,2024,"realistic, alternative math tail: more error at the top","[2, 3)",40,0.6834749999999999
+MACS,2024,"realistic, alternative math tail: more error at the top","[3, 10)",43,0.8775813953488372
 MACS,2024,realistic: new version + equating error,"[-12, -4)",783,0.01579821200510856
 MACS,2024,realistic: new version + equating error,"[-4, -3)",83,0.09240963855421687
 MACS,2024,realistic: new version + equating error,"[-3, -2)",63,0.15031746031746032
@@ -184,6 +202,22 @@ MACS,2025,quarter error (x0.25),"[-1, 0)",50,0.34398
 MACS,2025,quarter error (x0.25),"[0, 1)",67,0.5302686567164179
 MACS,2025,quarter error (x0.25),"[1, 2)",41,0.7787560975609755
 MACS,2025,quarter error (x0.25),"[2, 3)",21,0.9081428571428573
+MACS,2025,"realistic, alternative math tail: less error at the top","[-12, -4)",650,0.010084615384615385
+MACS,2025,"realistic, alternative math tail: less error at the top","[-4, -3)",63,0.09003174603174603
+MACS,2025,"realistic, alternative math tail: less error at the top","[-3, -2)",62,0.16759677419354838
+MACS,2025,"realistic, alternative math tail: less error at the top","[-2, -1)",74,0.24090540540540542
+MACS,2025,"realistic, alternative math tail: less error at the top","[-1, 0)",50,0.32138
+MACS,2025,"realistic, alternative math tail: less error at the top","[0, 1)",67,0.4391940298507463
+MACS,2025,"realistic, alternative math tail: less error at the top","[1, 2)",41,0.6448780487804878
+MACS,2025,"realistic, alternative math tail: less error at the top","[2, 3)",21,0.7856666666666666
+MACS,2025,"realistic, alternative math tail: more error at the top","[-12, -4)",650,0.014484615384615384
+MACS,2025,"realistic, alternative math tail: more error at the top","[-4, -3)",63,0.08474603174603175
+MACS,2025,"realistic, alternative math tail: more error at the top","[-3, -2)",62,0.1292258064516129
+MACS,2025,"realistic, alternative math tail: more error at the top","[-2, -1)",74,0.1980135135135135
+MACS,2025,"realistic, alternative math tail: more error at the top","[-1, 0)",50,0.31324
+MACS,2025,"realistic, alternative math tail: more error at the top","[0, 1)",67,0.46944776119402987
+MACS,2025,"realistic, alternative math tail: more error at the top","[1, 2)",41,0.6694878048780488
+MACS,2025,"realistic, alternative math tail: more error at the top","[2, 3)",21,0.8065238095238095
 MACS,2025,realistic: new version + equating error,"[-12, -4)",650,0.01052923076923077
 MACS,2025,realistic: new version + equating error,"[-4, -3)",63,0.08603174603174603
 MACS,2025,realistic: new version + equating error,"[-3, -2)",62,0.15198387096774194
@@ -224,6 +258,22 @@ MACS,2026,quarter error (x0.25),"[-1, 0)",93,0.29812903225806453
 MACS,2026,quarter error (x0.25),"[0, 1)",93,0.6622473118279569
 MACS,2026,quarter error (x0.25),"[1, 2)",74,0.8823513513513513
 MACS,2026,quarter error (x0.25),"[2, 3)",13,0.9474615384615385
+MACS,2026,"realistic, alternative math tail: less error at the top","[-12, -4)",970,0.008284536082474226
+MACS,2026,"realistic, alternative math tail: less error at the top","[-4, -3)",119,0.04433613445378151
+MACS,2026,"realistic, alternative math tail: less error at the top","[-3, -2)",115,0.07149565217391304
+MACS,2026,"realistic, alternative math tail: less error at the top","[-2, -1)",88,0.12888636363636363
+MACS,2026,"realistic, alternative math tail: less error at the top","[-1, 0)",93,0.29352688172043007
+MACS,2026,"realistic, alternative math tail: less error at the top","[0, 1)",93,0.5668924731182795
+MACS,2026,"realistic, alternative math tail: less error at the top","[1, 2)",74,0.7546081081081081
+MACS,2026,"realistic, alternative math tail: less error at the top","[2, 3)",13,0.8584615384615385
+MACS,2026,"realistic, alternative math tail: more error at the top","[-12, -4)",970,0.010845360824742268
+MACS,2026,"realistic, alternative math tail: more error at the top","[-4, -3)",119,0.05143697478991596
+MACS,2026,"realistic, alternative math tail: more error at the top","[-3, -2)",115,0.07392173913043477
+MACS,2026,"realistic, alternative math tail: more error at the top","[-2, -1)",88,0.12029545454545455
+MACS,2026,"realistic, alternative math tail: more error at the top","[-1, 0)",93,0.2698924731182796
+MACS,2026,"realistic, alternative math tail: more error at the top","[0, 1)",93,0.557010752688172
+MACS,2026,"realistic, alternative math tail: more error at the top","[1, 2)",74,0.758581081081081
+MACS,2026,"realistic, alternative math tail: more error at the top","[2, 3)",13,0.8515384615384616
 MACS,2026,realistic: new version + equating error,"[-12, -4)",970,0.008655670103092785
 MACS,2026,realistic: new version + equating error,"[-4, -3)",119,0.04663025210084034
 MACS,2026,realistic: new version + equating error,"[-3, -2)",115,0.07420869565217392

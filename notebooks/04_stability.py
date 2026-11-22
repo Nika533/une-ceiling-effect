@@ -1,4 +1,4 @@
-﻿# %% [markdown]
+# %% [markdown]
 # # 04 - How stable are admission lines at the top? Parallel-test simulation
 #
 # Question: if every student sat a parallel version of the same exams (same ability, new questions of the
@@ -22,12 +22,19 @@
 #   version (the student keeps the same percentile of true ability) and NAEC's equating is re-estimated from a
 #   resampled score distribution (sampling error of the equating), as happens in a real exam year.
 # Students whose foreign language is not English keep their foreign-language score (no equating table).
+# Mathematics, English and Georgian are all re-drawn on every simulated retake.
+#
+# Uncertainty in the true-score distribution: every prior is refitted to B = 200 multinomially resampled
+# score distributions (bootstrap); a second pass where retake i uses refit i % B gives the boot_* columns.
+# Tail sensitivity (MACS): the math prior is replaced by the true-score distributions with the smallest / largest
+# error variance of the top scorers that still fit the data (95% profile likelihood, simulate.npmle_bound).
 
 # %%
 from common import *
 from load import load_equating, load_rating, load_admissions
 from scores import recover_raw, top_linear_g
-from simulate import subject_model, equating_delta, retest_equated, fit_check
+from simulate import (subject_model, equating_delta, retest_equated, fit_check, refit, npmle_bound,
+                      top_functional, loglik, GRID, _lik)
 
 eq = load_equating()
 old036 = pd.read_csv(ROOT / "data/processed/admitted_036_all.csv", dtype={"prog_code": str, "exam_id": str})
@@ -41,11 +48,39 @@ PROGRAMS = [  # (label, year, program code)
 ]
 if oldiset is not None and (oldiset.year == 2024).any():
     PROGRAMS.append(("ISET (TSU)", 2024, oldiset[oldiset.year == 2024].prog_code.mode()[0]))
-SCEN = {"more error (x1.7)": (51 / 87, False, False), "baseline (x1)": (1.0, False, False),
-        "half error (x0.5)": (2.0, False, False), "quarter error (x0.25)": (4.0, False, False),
-        "realistic: new version + equating error": (1.0, True, True)}
+SCEN = {"more error (x1.7)": (51 / 87, False, False, "npmle"), "baseline (x1)": (1.0, False, False, "npmle"),
+        "half error (x0.5)": (2.0, False, False, "npmle"), "quarter error (x0.25)": (4.0, False, False, "npmle"),
+        "realistic: new version + equating error": (1.0, True, True, "npmle"),
+        "realistic, alternative math tail: less error at the top": (1.0, True, True, "fav"),
+        "realistic, alternative math tail: more error at the top": (1.0, True, True, "unf")}
+MAIN_SCEN = list(SCEN)[:5]
 FULL_SCEN_FOR = {"MACS"}  # other programs: baseline + realistic only
-R = 1000
+R = 1000  # simulated retakes per scenario
+B = 200  # bootstrap refits of every true-score prior; retake i uses refit i % B
+
+
+def prior_bounds(S, year):
+    """Alternative math true-score priors with the smallest / largest error variance of the top scorers that
+    still fit the data (profile-likelihood bounds, see simulate.npmle_bound), and their fit at the top."""
+    fav, unf, rows = {}, {}, []
+    for v, m in S.items():
+        if v == "__cache__":
+            continue
+        c, w, n = m["counts"], m["w"], m["n"]
+        h = top_functional(n, w, "error")
+        for name, sign, store in [("NPMLE", 0, None), ("less error at the top", 1, fav), ("more error at the top", -1, unf)]:
+            wb, drop = (w, 0.0) if sign == 0 else (lambda r: (r[0], r[1]["loglik_drop"]))(npmle_bound(c, w, h, sign))
+            if store is not None:
+                store[v] = wb
+            post = _lik(n)[n - 2:] * wb
+            post /= post.sum(axis=1, keepdims=True)
+            fitted = c.sum() * (_lik(n) @ wb)
+            rows.append({"year": year, "version": v, "prior": name, "loglik_drop": drop,
+                         **{f"obs_{x}": c[x] for x in (n - 2, n - 1, n)},
+                         **{f"fit_{x}": fitted[x] for x in (n - 2, n - 1, n)},
+                         **{f"sem_at_{x}": s for x, s in zip((n - 2, n - 1, n), np.sqrt(post @ (n * GRID * (1 - GRID))))},
+                         **{f"true_mean_at_{x}": t for x, t in zip((n - 2, n - 1, n), n * post @ GRID)}})
+    return refit(S, w_override=fav), refit(S, w_override=unf), rows
 
 
 def admits(label, year, code):
@@ -66,12 +101,14 @@ def year_data(year):
     r = load_rating(year)
     rec = recover_raw(r, eq)
     g = {s: d.groupby("equated").scaled.median() for s, d in rec.dropna(subset=["equated"]).groupby("subject")}
-    models, checks = {}, []
+    models, checks, boot = {}, [], {}
+    brng = np.random.default_rng(year)
     for s in ["MATH", "ENG", "GEO"]:
         models[s] = subject_model(eq[(eq.year == year) & (eq.subject == s)])
         for v, m in models[s].items():
-            from simulate import npmle  # noqa
             checks.append({"year": year, "subject": s, "version": v, **fit_check(m["counts"], m["w"])})
+        boot[s] = [refit(models[s], rng=brng) for _ in range(B)]
+    fav, unf, bound_rows = prior_bounds(models["MATH"], year)
     wide = r.pivot(index="exam_id", columns="subject", values="scaled")
     fl = wide.reindex(columns=["ENG", "RUS", "GER", "FRE"]).bfill(axis=1).iloc[:, 0]
     pop = pd.DataFrame({"GEO": wide["GEO"], "FL": fl, "MATH": wide["MATH"]}).dropna()
@@ -81,12 +118,12 @@ def year_data(year):
         pop[f"{s}_raw"], pop[f"{s}_ver"] = sub.raw, sub.version
     pop["is_eng"] = wide["ENG"].reindex(pop.index).notna()
     b = top_linear_g(pop.MATH.values, eq[(eq.year == year) & (eq.subject == "MATH")])[1]
-    YEAR[year] = (pop, models, g, b, pd.DataFrame(checks))
+    YEAR[year] = (pop, models, g, b, pd.DataFrame(checks), boot, {"fav": fav, "unf": unf}, bound_rows)
     return YEAR[year]
 
 
-def run(label, year, code, rng):
-    pop_all, models, g, b, _ = year_data(year)
+def run(label, year, code, rng, rng_x):
+    pop_all, models, g, b, _, boot, bounds, _ = year_data(year)
     a = admits(label, year, code)
     X = a[["geo_sc", "fl_sc", "el1_sc"]].values
     w, *_ = np.linalg.lstsq(X, a.comp.values, rcond=None)
@@ -100,12 +137,11 @@ def run(label, year, code, rng):
     K = int((pop.comp >= cut).sum())
     orig_top = (pop.comp >= cut).values
     rows, per = [], []
-    for name, (L, switch, eqerr) in SCEN.items():
-        if label not in FULL_SCEN_FOR and name not in ("baseline (x1)", "realistic: new version + equating error"):
-            continue
+
+    def sim(L, switch, eqerr, prior, rng):
         stay = np.zeros(len(pop))
         changed = []
-        for _ in range(R):
+        for i in range(R):
             new = {}
             for s, col in [("MATH", "MATH"), ("ENG", "FL"), ("GEO", "GEO")]:
                 sc = pop[col].values.copy()
@@ -113,7 +149,8 @@ def run(label, year, code, rng):
                 if s == "ENG":
                     ok &= pop.is_eng.values
                 d = equating_delta(models[s], rng) if eqerr else None
-                e = retest_equated(pop[f"{s}_raw"].values[ok], pop[f"{s}_ver"].values[ok], models[s], L, switch, d, rng)
+                M = {"npmle": models[s], "boot": boot[s][i % B]}.get(prior, bounds.get(prior) if s == "MATH" else models[s])
+                e = retest_equated(pop[f"{s}_raw"].values[ok], pop[f"{s}_ver"].values[ok], M, L, switch, d, rng)
                 sc[ok] = np.interp(e, g[s].index.values, g[s].values)
                 new[col] = sc
             comp = w[0] * new["GEO"] + w[1] * new["FL"] + w[2] * new["MATH"] + rng.random(len(pop)) * 1e-6
@@ -121,12 +158,20 @@ def run(label, year, code, rng):
             top[np.argsort(-comp)[:K]] = True
             stay += top
             changed.append((orig_top & ~top).sum())
-        changed = np.array(changed)
-        p_top = stay / R
+        return np.array(changed), stay / R
+
+    for name, (L, switch, eqerr, prior) in SCEN.items():
+        if label not in FULL_SCEN_FOR and name not in ("baseline (x1)", "realistic: new version + equating error"):
+            continue
+        # main scenarios: point estimates with the fitted prior (rng, as before); the bootstrap pass (rng_x)
+        # adds the uncertainty of the estimated true-score distribution to the 90% range
+        changed, p_top = sim(L, switch, eqerr, prior, rng if prior == "npmle" else rng_x)
+        cb = sim(L, switch, eqerr, "boot", rng_x)[0] if prior == "npmle" else changed
         rows.append({"program": label, "year": year, "scenario": name, "weights": "/".join(f"{x:g}" for x in w),
                      "admitted_math_route": len(a), "cutoff": cut, "K_places": K, "one_math_question": pt,
                      "mean_places_changing_hands": changed.mean(), "pct_places_changing_hands": 100 * changed.mean() / K,
                      "p05": np.percentile(changed, 5), "p95": np.percentile(changed, 95),
+                     "boot_mean": cb.mean(), "boot_p05": np.percentile(cb, 5), "boot_p95": np.percentile(cb, 95),
                      "n_students_simulated": len(pop),
                      "max_p_top_bottom_decile": p_top[pop.comp.values <= np.percentile(pop.comp, 10)].max()})
         d = pop[["comp", "MATH_raw"]].copy()
@@ -138,9 +183,10 @@ def run(label, year, code, rng):
 
 # %%
 rng = np.random.default_rng(2026)
+rng_x = np.random.default_rng(7)  # bootstrap and tail passes; keeps rng identical to the main runs
 results, per_student = [], []
 for label, year, code in PROGRAMS:
-    rws, per = run(label, year, code, rng)
+    rws, per = run(label, year, code, rng, rng_x)
     results += rws
     per_student += per
 res = pd.DataFrame(results)
@@ -148,6 +194,8 @@ res.to_csv(OUT / "t04_stability_summary.csv", index=False)
 ps = pd.concat(per_student)
 fits = pd.concat([YEAR[y][4] for y in sorted(YEAR)])
 fits.to_csv(OUT / "t04_npmle_fit_checks.csv", index=False)
+tail = pd.DataFrame([r for y in sorted(YEAR) for r in YEAR[y][7]])
+tail.to_csv(OUT / "t04_tail_bounds.csv", index=False)
 res[["program", "year", "scenario", "weights", "K_places", "mean_places_changing_hands", "pct_places_changing_hands",
      "p05", "p95", "max_p_top_bottom_decile"]].round(2)
 
@@ -181,10 +229,10 @@ ent.pivot(index="MATH_raw", columns=["year", "scenario"], values="expected_entra
 # ## Figure 6 - Probability of staying above the MACS line on a parallel test (2026)
 
 # %%
-fig, axes = plt.subplots(1, 2, figsize=(11.5, 3.9))
+fig, axes = plt.subplots(1, 2, figsize=(8.4, 2.9))
 ax = axes[0]
-colors = dict(zip(SCEN, ["tab:red", "black", "tab:blue", "tab:green", "tab:purple"]))
-for name in SCEN:
+colors = dict(zip(MAIN_SCEN, ["tab:red", "black", "tab:blue", "tab:green", "tab:purple"]))
+for name in MAIN_SCEN:
     d = ps[(ps.program == "MACS") & (ps.year == 2026) & (ps.scenario == name)].sort_values("comp")
     sm = d.p_top.rolling(25, center=True, min_periods=5).mean()
     ax.plot(d.dist_q, sm, color=colors[name], label=name, lw=1.8 if name.startswith(("baseline", "realistic")) else 1.1,
@@ -192,23 +240,24 @@ for name in SCEN:
 ax.axvline(0, color="grey", ls=":")
 ax.set_xlim(-6, 3)
 ax.set_xlabel("Distance from the 2026 MACS cutoff (in math questions)")
-ax.set_ylabel("P(above the line on a parallel test)")
-ax.set_title("Above or below the line: mostly luck within ~2 questions")
-ax.legend(fontsize=7, frameon=False)
+ax.set_ylabel("P(above the line\non a parallel test)")
+ax.set_title("Above or below the line: mostly luck\nwithin ~2 questions")
+ax.legend(framealpha=0.85, edgecolor="none")
 ax = axes[1]
 macs = res[res.program == "MACS"]
-xs = np.arange(len(SCEN))
+xs = np.arange(len(MAIN_SCEN))
 yrs = sorted(macs.year.unique())
 wbar = 0.8 / len(yrs)
 for i, (y, c) in enumerate(zip(yrs, ["tab:olive", "tab:gray", "tab:purple"])):
-    dd = macs[macs.year == y].set_index("scenario").reindex(list(SCEN))
+    dd = macs[macs.year == y].set_index("scenario").reindex(MAIN_SCEN)
     ax.bar(xs + (i - (len(yrs) - 1) / 2) * wbar, dd.pct_places_changing_hands, width=wbar, color=c, label=str(y),
-           yerr=[100 * (dd.mean_places_changing_hands - dd.p05) / dd.K_places, 100 * (dd.p95 - dd.mean_places_changing_hands) / dd.K_places],
+           yerr=[100 * (dd.mean_places_changing_hands - dd.boot_p05).clip(lower=0) / dd.K_places, 100 * (dd.boot_p95 - dd.mean_places_changing_hands) / dd.K_places],
            capsize=2)
-ax.set_xticks(xs, ["more error\n(x1.7)", "baseline\n(x1)", "half error\n(x0.5)", "quarter error\n(x0.25)", "realistic:\nnew version\n+ equating"], fontsize=7.5)
-ax.set_ylabel("% of MACS-level places changing hands")
-ax.set_title("MACS: places that change hands on a parallel test")
-ax.legend(frameon=False, fontsize=8)
+ax.set_xticks(xs, ["more\nx1.7", "baseline\nx1", "half\nx0.5", "quarter\nx0.25", "realistic\nnew ver.\n+ equating"])
+ax.set_ylabel("% of MACS-level places\nchanging hands")
+ax.set_title("MACS: places that change hands\non a parallel test")
+ax.set_ylim(0, 62)
+ax.legend(ncol=3, loc="upper center", framealpha=0.85, edgecolor="none")
 fig.tight_layout()
 savefig(fig, "fig06_stability")
 
@@ -216,22 +265,24 @@ savefig(fig, "fig06_stability")
 # ## Figure 8 - Other selective math programs
 
 # %%
-fig, ax = plt.subplots(figsize=(8.5, 3.8))
+fig, ax = plt.subplots(figsize=(7.5, 3.35))
 progs = [p for p in ["MACS", "Free Uni ECE", "ISET (TSU)"] if p in res.program.unique()]
 labels, base, real, lo, hi = [], [], [], [], []
+short = {"MACS": "MACS", "Free Uni ECE": "ECE", "ISET (TSU)": "ISET"}
 for p in progs:
     for y in sorted(res[res.program == p].year.unique()):
         b_ = res[(res.program == p) & (res.year == y) & (res.scenario == "baseline (x1)")].iloc[0]
         r_ = res[(res.program == p) & (res.year == y) & (res.scenario.str.startswith("realistic"))].iloc[0]
-        labels.append(f"{p}\n{y} (K={b_.K_places})")
+        labels.append(f"{short[p]}\n{y}\nK={b_.K_places}")
         base.append(b_.pct_places_changing_hands)
         real.append(r_.pct_places_changing_hands)
 x = np.arange(len(labels))
 ax.bar(x - 0.2, base, 0.4, color="black", alpha=0.75, label="baseline")
 ax.bar(x + 0.2, real, 0.4, color="tab:purple", alpha=0.85, label="realistic: new version + equating error")
-ax.set_xticks(x, labels, fontsize=7.5)
+ax.set_xticks(x, labels)
 ax.set_ylabel("% of program-level places\nchanging hands")
-ax.set_title("Places that change hands on a parallel test, by program and year")
-ax.legend(frameon=False, fontsize=8)
+ax.set_ylim(0, max(base + real) * 1.32)
+ax.set_title("Places that change hands on a parallel test,\nby program and year")
+ax.legend(framealpha=0.85, edgecolor="none")
 fig.tight_layout()
 savefig(fig, "fig08_programs_stability")

@@ -17,7 +17,9 @@ OUT.mkdir(exist_ok=True)
 SUBJ_NAME = {"MATH": "Mathematics", "ENG": "English", "GEO": "Georgian language & literature",
              "HIST": "History", "RUS": "Russian", "PHYS": "Physics", "CHEM": "Chemistry", "BIO": "Biology"}
 
-plt.rcParams.update({"figure.dpi": 110, "savefig.dpi": 300, "font.size": 10, "axes.spines.top": False,
+plt.rcParams.update({"figure.dpi": 110, "savefig.dpi": 300, "font.size": 11,
+                     "legend.fontsize": 9.5, "xtick.labelsize": 9.5, "ytick.labelsize": 9.5,
+                     "axes.spines.top": False,
                      "axes.spines.right": False, "axes.grid": True, "grid.alpha": 0.3})
 pd.set_option("display.width", 200)
 pd.set_option("display.max_columns", 40)

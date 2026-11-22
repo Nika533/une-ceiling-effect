@@ -29,5 +29,27 @@ uv run python src/parse_statanalysis.py
 uv run python src/build_nb.py notebooks/01_distributions.py notebooks/02_resolution.py notebooks/03_macs.py notebooks/04_stability.py notebooks/05_trends.py notebooks/06_model_checks.py
 ```
 
+## Paper figures and tables
+
+| Paper element | Notebook | Output file(s) |
+|---|---|---|
+| Fig. 1 `fig01_math_upper_tail` | `notebooks/01_distributions.py` | – |
+| Fig. 2 `fig02_ceiling_indicators` | `notebooks/01_distributions.py` | `outputs/t01_subject_year.csv` (data) |
+| Fig. 3 `fig03_measurement_error` | `notebooks/02_resolution.py` | `outputs/t02_math_sem.csv`, `outputs/t02_math_equating_bootstrap_2026.csv` |
+| Fig. 4 `fig04_macs_crowding` | `notebooks/03_macs.py` | `outputs/t03_macs_cutoff_crowd.csv` (cutoff values) |
+| Fig. 5 `fig05_macs_admits_2026` | `notebooks/03_macs.py` | – |
+| Fig. 6 `fig06_stability` | `notebooks/04_stability.py` | `outputs/t04_stability_summary.csv`, `outputs/t04_stability_by_distance.csv` |
+| Fig. 7 `fig07_trends` | `notebooks/05_trends.py` | `outputs/t05_macs_by_year.csv` |
+| Fig. 8 `fig08_programs_stability` | `notebooks/04_stability.py` | `outputs/t04_stability_summary.csv` |
+| Table 1 (test format & MACS weights) | – | written by hand; format facts in `outputs/t02_math_test_structure.csv` (nb02), weights in `outputs/t05_macs_by_year.csv` (nb05) |
+| Table 2 (data sources) | – | `data/raw/sources.csv` |
+| Table 3 (top of math distribution) | `notebooks/01_distributions.py` | `outputs/t01_math_top_counts.csv` |
+| Table 4 (MACS admissions, math route) | `notebooks/05_trends.py` | `outputs/t05_macs_by_year.csv` |
+| Table 5 (MACS places changing hands) | `notebooks/04_stability.py` | `outputs/t04_stability_summary.csv` |
+| Table 6 (places changing hands, by program) | `notebooks/04_stability.py` | `outputs/t04_stability_summary.csv` |
+| Table 7 (data and model checks, appendix) | `notebooks/06_model_checks.py` | `outputs/t06_counts_check.csv`, `outputs/t06_raw_recovery_check.csv`, `outputs/t06_model_reliability.csv`, `outputs/t06_distribution_preservation.csv` |
+
+The remaining `outputs/t0*.csv` files back in-text numbers in the Results and appendix.
+
 ## Notes
 The code was written with the help of an AI assistant. Data belong to NAEC. The code is released under the MIT License.

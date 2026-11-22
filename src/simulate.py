@@ -17,17 +17,71 @@ from scipy import stats
 GRID = np.linspace(0.001, 0.999, 500)
 
 
-def npmle(counts: np.ndarray, iters: int = 3000) -> np.ndarray:
-    """Mixing weights on GRID for a binomial mixture fitted to counts[x], x = 0..n."""
-    n = len(counts) - 1
-    x = np.arange(n + 1)
-    lik = stats.binom.pmf(x[:, None], n, GRID[None, :])  # (n+1, K)
-    w = np.full(len(GRID), 1 / len(GRID))
+def _lik(n: int) -> np.ndarray:
+    return stats.binom.pmf(np.arange(n + 1)[:, None], n, GRID[None, :])  # (n+1, K)
+
+
+def npmle(counts: np.ndarray, iters: int = 3000, w0: np.ndarray | None = None) -> np.ndarray:
+    """Mixing weights on GRID for a binomial mixture fitted to counts[x], x = 0..n (EM; w0 = warm start)."""
+    lik = _lik(len(counts) - 1)
+    w = np.full(len(GRID), 1 / len(GRID)) if w0 is None else w0.copy()
     N = counts.sum()
     for _ in range(iters):
         px = lik @ w
         w = w * (lik.T @ (counts / np.maximum(px, 1e-300))) / N
     return w
+
+
+def loglik(counts: np.ndarray, w: np.ndarray) -> float:
+    px = _lik(len(counts) - 1) @ w
+    return float(counts @ np.log(np.maximum(px, 1e-300)))
+
+
+def top_functional(n: int, w_hat: np.ndarray, kind: str, top: int = 6) -> np.ndarray:
+    """h(p) for the profile bounds, about the students who scored in the 	op highest raw scores.
+
+    kind="error": binomial error variance n p (1 - p); kind="mean": true score p (how far top scorers' true
+    scores sit below their observed scores). h is centred at its current value among top scorers and weighted
+    by the probability that p produces a top score, so sum_k w_k h(p_k) moves with the top scorers' average."""
+    f = n * GRID * (1 - GRID) if kind == "error" else GRID
+    lt = _lik(n)[n - top + 1:].sum(axis=0)
+    return (f - (w_hat * lt) @ f / (w_hat @ lt)) * lt
+
+def npmle_bound(counts: np.ndarray, w_hat: np.ndarray, h: np.ndarray, sign: int, delta: float = 1.92,
+                iters: int = 1500, steps: int = 25) -> tuple[np.ndarray, dict]:
+    """Profile-likelihood bound on the size of measurement error at the top of the true-score distribution.
+
+    Among mixing distributions whose log-likelihood is within `delta` of the NPMLE (1.92 = 95% profile
+    likelihood for one functional), find the one that minimises (sign=+1, most favourable to the exam) or
+    maximises (sign=-1) H(w) = sum_k w_k h(p_k) (see top_functional).
+    Solved as max L(w) - sign * lam * H(w) with an EM-type fixed point; lam found by bisection."""
+    n = len(counts) - 1
+    lik, N = _lik(n), counts.sum()
+    L_hat = loglik(counts, w_hat)
+
+    def solve(lam, w):
+        w = w.copy()
+        for _ in range(iters):
+            g = lik.T @ (counts / np.maximum(lik @ w, 1e-300))
+            w = w * g / np.maximum(N + sign * lam * (h - w @ h), 1e-9 * N)
+            w /= w.sum()
+        return w
+
+    start = 0.98 * w_hat + 0.02 / len(GRID)
+    lo, hi, w_lo = 0.0, 1.0, w_hat
+    w_hi = solve(hi, start)
+    while L_hat - loglik(counts, w_hi) < delta and hi < 1e4:
+        lo, w_lo, hi = hi, w_hi, hi * 2
+        w_hi = solve(hi, w_lo)
+    for _ in range(steps):
+        mid = (lo + hi) / 2
+        w_mid = solve(mid, w_lo)
+        if L_hat - loglik(counts, w_mid) < delta:
+            lo, w_lo = mid, w_mid
+        else:
+            hi = mid
+    return w_lo, {"lam": lo, "loglik_drop": L_hat - loglik(counts, w_lo), "H_hat": float(w_hat @ h),
+                  "H_bound": float(w_lo @ h)}
 
 
 def posterior_cdf(counts: np.ndarray, w: np.ndarray) -> np.ndarray:
@@ -84,6 +138,22 @@ def subject_model(eq_ys: pd.DataFrame, min_n: int = 500) -> dict:
         S[int(v)] = {"counts": c, "N": c.sum(), "n": len(c) - 1, "w": w, "F": np.cumsum(w),
                      "cdf_post": posterior_cdf(c, w), "equated": e.equated.values}
     return S
+
+
+def refit(S: dict, rng: np.random.Generator | None = None, w_override: dict | None = None) -> dict:
+    """Copy of a subject model with a different true-score prior per version: w_override[version] if given,
+    otherwise (rng) the NPMLE refitted to multinomially resampled score counts (parametric bootstrap of the
+    prior). Counts and equating tables are kept, so equating_delta should still be called on the original S."""
+    out = {}
+    for v, m in S.items():
+        if v == "__cache__":
+            continue
+        if w_override is not None:
+            w = w_override.get(v, m["w"])
+        else:
+            w = npmle(rng.multinomial(int(m["N"]), m["counts"] / m["N"]).astype(float))
+        out[v] = {**m, "w": w, "F": np.cumsum(w), "cdf_post": posterior_cdf(m["counts"], w)}
+    return out
 
 
 def _raw_equating_delta(S: dict, rng: np.random.Generator) -> dict:

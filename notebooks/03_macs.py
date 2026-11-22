@@ -202,7 +202,7 @@ dem
 # top part only. Shaded band = admitted range; dotted lines = one and two math raw points below the cutoff.
 
 # %%
-fig, axes = plt.subplots(1, 2, figsize=(11.5, 3.9))
+fig, axes = plt.subplots(1, 2, figsize=(8.4, 2.9))
 for ax, y in zip(axes, MACS):
     p = pops[y]
     cut = cut_t.set_index("year").loc[y, "cutoff"]
@@ -213,10 +213,11 @@ for ax, y in zip(axes, MACS):
     ax.axvline(cut, color="tab:red")
     for k in (1, 2):
         ax.axvline(cut - 13 * k, color="grey", ls=":")
-    ax.set_title(f"{y}: MACS competitive score, top of the distribution")
+    ax.set_title(f"{y}: MACS competitive score,\ntop of the distribution")
     ax.set_xlabel("Georgian + foreign language + 10 x Math (scaled)")
     ax.set_ylabel("Students per 2-point bin")
-    ax.legend(fontsize=8, frameon=False, loc="upper left")
+    ax.set_ylim(0, ax.get_ylim()[1] * 1.4)
+    ax.legend(framealpha=0.85, edgecolor="none", loc="upper left")
 fig.tight_layout()
 savefig(fig, "fig04_macs_crowding")
 
@@ -226,7 +227,7 @@ savefig(fig, "fig04_macs_crowding")
 
 # %%
 m = adms[2026][adms[2026].prog_code == MACS[2026]].sort_values("comp").reset_index(drop=True)
-fig, ax = plt.subplots(figsize=(8, 4))
+fig, ax = plt.subplots(figsize=(6.3, 3.2))
 sc = ax.scatter(m.geo_sc + m.fl_sc, m.comp, c=m.el1_raw, cmap="viridis", s=28, vmin=48, vmax=51)
 cb = fig.colorbar(sc, ax=ax, ticks=[48, 49, 50, 51])
 cb.set_label("Math raw score")
