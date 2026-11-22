@@ -22,7 +22,8 @@
 #   version (the student keeps the same percentile of true ability) and NAEC's equating is re-estimated from a
 #   resampled score distribution (sampling error of the equating), as happens in a real exam year.
 # Students whose foreign language is not English keep their foreign-language score (no equating table).
-# Mathematics, English and Georgian are all re-drawn on every simulated retake.
+# Mathematics, English and Georgian are all re-drawn on every simulated retake, except in the extra
+# "realistic, mathematics only" scenario, where only mathematics is redrawn.
 #
 # Uncertainty in the true-score distribution: every prior is refitted to B = 200 multinomially resampled
 # score distributions (bootstrap); a second pass where retake i uses refit i % B gives the boot_* columns.
@@ -51,8 +52,10 @@ if oldiset is not None and (oldiset.year == 2024).any():
 SCEN = {"more error (x1.7)": (51 / 87, False, False, "npmle"), "baseline (x1)": (1.0, False, False, "npmle"),
         "half error (x0.5)": (2.0, False, False, "npmle"), "quarter error (x0.25)": (4.0, False, False, "npmle"),
         "realistic: new version + equating error": (1.0, True, True, "npmle"),
-        "realistic, alternative math tail: less error at the top": (1.0, True, True, "fav"),
-        "realistic, alternative math tail: more error at the top": (1.0, True, True, "unf")}
+        "realistic, alternative math tail: true scores closer to the maximum": (1.0, True, True, "fav"),
+        "realistic, alternative math tail: true scores further below the maximum": (1.0, True, True, "unf"),
+        "realistic, mathematics only": (1.0, True, True, "npmle")}
+MATH_ONLY = {"realistic, mathematics only"}  # only MATH is redrawn; GEO and FL keep their scaled scores
 MAIN_SCEN = list(SCEN)[:5]
 FULL_SCEN_FOR = {"MACS"}  # other programs: baseline + realistic only
 R = 1000  # simulated retakes per scenario
@@ -60,15 +63,16 @@ B = 200  # bootstrap refits of every true-score prior; retake i uses refit i % B
 
 
 def prior_bounds(S, year):
-    """Alternative math true-score priors with the smallest / largest error variance of the top scorers that
-    still fit the data (profile-likelihood bounds, see simulate.npmle_bound), and their fit at the top."""
+    """Alternative math true-score priors at the profile-likelihood bounds of the top scorers' binomial error
+    variance (simulate.npmle_bound): lowering it moves the fitted true scores toward the maximum, raising it
+    moves them further below. Also reports each prior's fit at the top."""
     fav, unf, rows = {}, {}, []
     for v, m in S.items():
         if v == "__cache__":
             continue
         c, w, n = m["counts"], m["w"], m["n"]
         h = top_functional(n, w, "error")
-        for name, sign, store in [("NPMLE", 0, None), ("less error at the top", 1, fav), ("more error at the top", -1, unf)]:
+        for name, sign, store in [("NPMLE", 0, None), ("true scores closer to the maximum", 1, fav), ("true scores further below the maximum", -1, unf)]:
             wb, drop = (w, 0.0) if sign == 0 else (lambda r: (r[0], r[1]["loglik_drop"]))(npmle_bound(c, w, h, sign))
             if store is not None:
                 store[v] = wb
@@ -138,20 +142,21 @@ def run(label, year, code, rng, rng_x):
     orig_top = (pop.comp >= cut).values
     rows, per = [], []
 
-    def sim(L, switch, eqerr, prior, rng):
+    def sim(L, switch, eqerr, prior, rng, math_only=False):
         stay = np.zeros(len(pop))
         changed = []
         for i in range(R):
             new = {}
             for s, col in [("MATH", "MATH"), ("ENG", "FL"), ("GEO", "GEO")]:
                 sc = pop[col].values.copy()
-                ok = pop[f"{s}_raw"].notna().values & pop[f"{s}_ver"].isin(list(models[s])).values
-                if s == "ENG":
-                    ok &= pop.is_eng.values
-                d = equating_delta(models[s], rng) if eqerr else None
-                M = {"npmle": models[s], "boot": boot[s][i % B]}.get(prior, bounds.get(prior) if s == "MATH" else models[s])
-                e = retest_equated(pop[f"{s}_raw"].values[ok], pop[f"{s}_ver"].values[ok], M, L, switch, d, rng)
-                sc[ok] = np.interp(e, g[s].index.values, g[s].values)
+                if not (math_only and s != "MATH"):
+                    ok = pop[f"{s}_raw"].notna().values & pop[f"{s}_ver"].isin(list(models[s])).values
+                    if s == "ENG":
+                        ok &= pop.is_eng.values
+                    d = equating_delta(models[s], rng) if eqerr else None
+                    M = {"npmle": models[s], "boot": boot[s][i % B]}.get(prior, bounds.get(prior) if s == "MATH" else models[s])
+                    e = retest_equated(pop[f"{s}_raw"].values[ok], pop[f"{s}_ver"].values[ok], M, L, switch, d, rng)
+                    sc[ok] = np.interp(e, g[s].index.values, g[s].values)
                 new[col] = sc
             comp = w[0] * new["GEO"] + w[1] * new["FL"] + w[2] * new["MATH"] + rng.random(len(pop)) * 1e-6
             top = np.zeros(len(pop), bool)
@@ -164,9 +169,11 @@ def run(label, year, code, rng, rng_x):
         if label not in FULL_SCEN_FOR and name not in ("baseline (x1)", "realistic: new version + equating error"):
             continue
         # main scenarios: point estimates with the fitted prior (rng, as before); the bootstrap pass (rng_x)
-        # adds the uncertainty of the estimated true-score distribution to the 90% range
-        changed, p_top = sim(L, switch, eqerr, prior, rng if prior == "npmle" else rng_x)
-        cb = sim(L, switch, eqerr, "boot", rng_x)[0] if prior == "npmle" else changed
+        # adds the uncertainty of the estimated true-score distribution to the 90% range. The math-only
+        # scenario uses rng_m for both passes so it cannot perturb any existing result.
+        math_only = name in MATH_ONLY
+        changed, p_top = sim(L, switch, eqerr, prior, rng_m if math_only else (rng if prior == "npmle" else rng_x), math_only)
+        cb = sim(L, switch, eqerr, "boot", rng_m if math_only else rng_x, math_only)[0] if prior == "npmle" else changed
         rows.append({"program": label, "year": year, "scenario": name, "weights": "/".join(f"{x:g}" for x in w),
                      "admitted_math_route": len(a), "cutoff": cut, "K_places": K, "one_math_question": pt,
                      "mean_places_changing_hands": changed.mean(), "pct_places_changing_hands": 100 * changed.mean() / K,
@@ -184,6 +191,7 @@ def run(label, year, code, rng, rng_x):
 # %%
 rng = np.random.default_rng(2026)
 rng_x = np.random.default_rng(7)  # bootstrap and tail passes; keeps rng identical to the main runs
+rng_m = np.random.default_rng(11)  # math-only scenario only; no shared draws with rng / rng_x
 results, per_student = [], []
 for label, year, code in PROGRAMS:
     rws, per = run(label, year, code, rng, rng_x)
