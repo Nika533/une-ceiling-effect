@@ -38,8 +38,8 @@ uv run python src/build_nb.py notebooks/01_distributions.py notebooks/02_resolut
 | Fig. 3 `fig03_measurement_error` | `notebooks/02_resolution.py` | `outputs/t02_math_sem.csv`, `outputs/t02_math_equating_bootstrap_2026.csv` |
 | Fig. 4 `fig04_macs_crowding` | `notebooks/03_macs.py` | `outputs/t03_macs_cutoff_crowd.csv` (cutoff values) |
 | Fig. 5 `fig05_macs_admits_2026` | `notebooks/03_macs.py` | – |
-| Fig. 6 `fig06_stability` | `notebooks/04_stability.py` | `outputs/t04_stability_summary.csv`, `outputs/t04_stability_by_distance.csv` |
-| Fig. 7 `fig07_trends` | `notebooks/05_trends.py` | `outputs/t05_macs_by_year.csv` |
+| Fig. 6 `fig07_trends` | `notebooks/05_trends.py` | `outputs/t05_macs_by_year.csv` |
+| Fig. 7 `fig06_stability` | `notebooks/04_stability.py` | `outputs/t04_stability_summary.csv`, `outputs/t04_stability_by_distance.csv` |
 | Fig. 8 `fig08_programs_stability` | `notebooks/04_stability.py` | `outputs/t04_stability_summary.csv` |
 | Table 1 (test format & MACS weights) | – | written by hand; format facts in `outputs/t02_math_test_structure.csv` (nb02), weights in `outputs/t05_macs_by_year.csv` (nb05) |
 | Table 2 (data sources) | – | `data/raw/sources.csv` |
